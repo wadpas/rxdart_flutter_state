@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:rxdart/rxdart.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,9 +29,31 @@ class MyHomePage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final subject = useMemoized(
+      () => BehaviorSubject<String>(),
+      [key],
+    );
+
+    useEffect(
+      () => subject.close,
+      [subject],
+    );
+
     return Scaffold(
-      appBar: AppBar(title: Text('data')),
-      body: Text('data'),
+      appBar: AppBar(
+        title: StreamBuilder<String>(
+          stream: subject.stream.distinct().debounceTime(
+                const Duration(seconds: 1),
+              ),
+          initialData: 'Text...',
+          builder: (context, snapshot) => Text(
+            snapshot.requireData,
+          ),
+        ),
+      ),
+      body: TextField(
+        onChanged: subject.sink.add,
+      ),
     );
   }
 }
