@@ -18,11 +18,11 @@ class Api {
       return cachedResults;
     }
 
-    final persons = await _getJson('http://127.0.0.1:5500/apis/persons.json')
+    final persons = await _getJson('http://10.0.2.2:5500/apis/persons.json')
         .then((json) => json.map((e) => Person.fromJson(e)));
     _persons = persons.toList();
 
-    final animals = await _getJson('http://127.0.0.1:5500/apis/animals.json')
+    final animals = await _getJson('http://10.0.2.2:5500/apis/animals.json')
         .then((json) => json.map((e) => Animal.fromJson(e)));
     _animals = animals.toList();
 

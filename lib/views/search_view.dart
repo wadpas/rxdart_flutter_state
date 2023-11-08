@@ -4,7 +4,7 @@ import 'package:rxdart_flutter_state/models/animal.dart';
 import 'package:rxdart_flutter_state/models/person.dart';
 
 class SearchView extends StatelessWidget {
-  final Stream<SearchResult> searchResult;
+  final Stream<SearchResult?> searchResult;
   const SearchView({
     super.key,
     required this.searchResult,
